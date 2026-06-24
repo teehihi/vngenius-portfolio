@@ -162,8 +162,19 @@ a {
   transform: translateY(27%);
   user-select: none;
   background:
-    linear-gradient(110deg, transparent 8%, currentColor 50%, transparent 88%),
-    linear-gradient(currentColor, currentColor);
+    linear-gradient(
+      110deg,
+      transparent 8%,
+      color-mix(in oklch, var(--foreground) 6%, transparent) 28%,
+      color-mix(in oklch, var(--foreground) 38%, transparent) 50%,
+      color-mix(in oklch, var(--foreground) 8%, transparent) 70%,
+      transparent 88%
+    ),
+    linear-gradient(
+      180deg,
+      color-mix(in oklch, var(--foreground) 16%, transparent),
+      color-mix(in oklch, var(--foreground) 4%, transparent)
+    );
   background-size:
     180% 100%,
     100% 100%;
@@ -177,8 +188,10 @@ a {
   font-size: clamp(5.5rem, 22vw, 13rem);
   font-weight: 900;
   line-height: 0.72;
-  letter-spacing: -0.06em;
-  -webkit-text-stroke: 1px color-mix(in oklch, var(--foreground) 12%, transparent);
+  letter-spacing: 0;
+  -webkit-text-fill-color: transparent;
+  -webkit-text-stroke: 1px color-mix(in oklch, var(--foreground) 16%, transparent);
+  text-shadow: 0 1.5rem 4rem color-mix(in oklch, var(--foreground) 7%, transparent);
   animation: fluid-pass 5s ease-in-out infinite alternate;
 }
 
