@@ -371,9 +371,9 @@ function UniQuizzVisual() {
       <div className="uni-closet">
         <div className="uni-tabs">
           <span>Set</span>
-          <span className="active">Ao</span>
-          <span>Quan</span>
-          <span>Mu</span>
+          <span className="active">Áo</span>
+          <span>Quần</span>
+          <span>Mũ</span>
         </div>
         <div className="uni-items">
           {closetItems.map((item) => (
