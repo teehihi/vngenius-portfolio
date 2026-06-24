@@ -11,6 +11,8 @@
   --ring: oklch(0.709 0.01 56.259);
   --page-grid-base: #faf8f2;
   --page-grid-line: rgb(15 15 15 / 0.045);
+  --mouse-x: 50vw;
+  --mouse-y: 20vh;
   font-family:
     ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New",
     monospace;
@@ -29,6 +31,7 @@ html {
 body {
   margin: 0;
   min-width: 320px;
+  overflow-x: hidden;
   background: var(--background);
   color: var(--foreground);
 }
@@ -41,7 +44,8 @@ a {
 .page-grid-shell {
   min-height: 100vh;
   position: relative;
-  overflow: visible;
+  overflow-x: hidden;
+  overflow-y: visible;
   background:
     linear-gradient(var(--page-grid-line) 1px, transparent 1px),
     linear-gradient(90deg, var(--page-grid-line) 1px, transparent 1px),
@@ -54,6 +58,51 @@ a {
     auto,
     auto,
     auto;
+}
+
+.mouse-glow {
+  pointer-events: none;
+  position: fixed;
+  inset: 0;
+  z-index: 0;
+  background:
+    radial-gradient(
+      36rem circle at var(--mouse-x) var(--mouse-y),
+      color-mix(in oklch, #ec4899 18%, transparent),
+      transparent 42%
+    ),
+    radial-gradient(
+      28rem circle at calc(var(--mouse-x) + 10rem) calc(var(--mouse-y) + 6rem),
+      color-mix(in oklch, #f97316 14%, transparent),
+      transparent 45%
+    );
+  mix-blend-mode: plus-lighter;
+  opacity: 0.75;
+}
+
+.scroll-progress {
+  position: fixed;
+  top: 0;
+  left: 0;
+  z-index: 80;
+  height: 2px;
+  width: 100%;
+  transform-origin: left;
+  background: linear-gradient(90deg, #6366f1, #ec4899, #f97316, #eab308);
+  scale: 0 1;
+}
+
+@supports (animation-timeline: scroll()) {
+  .scroll-progress {
+    animation: scroll-progress linear both;
+    animation-timeline: scroll();
+  }
+
+  @keyframes scroll-progress {
+    to {
+      scale: 1 1;
+    }
+  }
 }
 
 .section-nav {
@@ -147,10 +196,32 @@ a {
   padding: 1.5rem 0 0.5rem;
 }
 
+.hero-orbit-card {
+  width: min(100%, 13.25rem);
+  border-radius: 2rem;
+}
+
+.hero-orbit-card .electric-content {
+  display: grid;
+  min-height: 13.25rem;
+  place-items: center;
+  border: 1px solid var(--line);
+  border-radius: inherit;
+  background:
+    radial-gradient(circle at 35% 25%, rgb(249 168 212 / 0.22), transparent 45%),
+    color-mix(in oklch, var(--card) 82%, transparent);
+  overflow: hidden;
+}
+
 .hero-avatar-stack {
   display: flex;
   align-items: center;
   gap: 0.55rem;
+}
+
+.hero-orbit-card .hero-avatar-stack {
+  position: relative;
+  z-index: 2;
 }
 
 .profile-avatar {
@@ -198,6 +269,22 @@ a {
 .headline-cycle {
   position: relative;
   display: inline-block;
+}
+
+.shimmer-text {
+  display: inline-block;
+  background: linear-gradient(90deg, #6366f1, #ec4899, #f97316, #eab308, #6366f1);
+  background-size: 300% 100%;
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+  animation: shimmer-slide 2.6s linear infinite;
+}
+
+@keyframes shimmer-slide {
+  to {
+    background-position: 300% 0;
+  }
 }
 
 .headline-cycle::after {
@@ -296,6 +383,10 @@ a {
   gap: 0.85rem;
 }
 
+.featured-grid {
+  grid-template-columns: 1fr;
+}
+
 .profile-card,
 .project-card,
 .strength-card,
@@ -305,6 +396,11 @@ a {
     border-color 180ms ease,
     transform 180ms ease,
     box-shadow 180ms ease;
+}
+
+.featured-project {
+  overflow: visible;
+  padding: 0.75rem;
 }
 
 .profile-card:hover,
@@ -410,6 +506,196 @@ a {
   gap: 1rem;
 }
 
+.project-visual-border {
+  margin-bottom: 1rem;
+  border-radius: 1.25rem;
+}
+
+.project-visual-border .electric-content {
+  overflow: hidden;
+  border-radius: inherit;
+  background: #050506;
+}
+
+.maze-visual,
+.apex-visual {
+  position: relative;
+  min-height: 18rem;
+  overflow: hidden;
+  border-radius: inherit;
+  isolation: isolate;
+}
+
+.maze-bg,
+.apex-bg {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.maze-bg {
+  image-rendering: pixelated;
+  filter: saturate(1.2) contrast(1.05);
+}
+
+.maze-board {
+  position: absolute;
+  inset: 1.1rem;
+  z-index: 2;
+  display: grid;
+  grid-template-columns: repeat(6, minmax(0, 1fr));
+  gap: 0.35rem;
+  max-width: 19rem;
+  padding: 0.75rem;
+  border: 1px solid rgb(255 255 255 / 0.28);
+  border-radius: 1rem;
+  background: rgb(7 13 18 / 0.45);
+  backdrop-filter: blur(5px);
+}
+
+.maze-board .node {
+  aspect-ratio: 1;
+  border-radius: 0.35rem;
+  background: rgb(255 255 255 / 0.18);
+  box-shadow: inset 0 -3px 0 rgb(0 0 0 / 0.22);
+}
+
+.maze-board .hot {
+  background: #22c55e;
+  animation: pulse-node 1.4s ease-in-out infinite;
+}
+
+.maze-board .key {
+  background: #eab308;
+}
+
+@keyframes pulse-node {
+  50% {
+    scale: 0.82;
+    opacity: 0.65;
+  }
+}
+
+.maze-player,
+.maze-coin,
+.maze-key {
+  position: absolute;
+  z-index: 3;
+  image-rendering: pixelated;
+}
+
+.maze-player {
+  right: 0.5rem;
+  bottom: 0.25rem;
+  width: 13rem;
+  filter: drop-shadow(0 10px 16px rgb(0 0 0 / 0.35));
+  animation: float-sprite 2.4s ease-in-out infinite alternate;
+}
+
+.maze-coin {
+  right: 7rem;
+  top: 1rem;
+  width: 5.5rem;
+  animation: spin-coin 3.8s linear infinite;
+}
+
+.maze-key {
+  right: 2rem;
+  top: 4.3rem;
+  width: 5rem;
+  animation: float-sprite 2s ease-in-out infinite alternate-reverse;
+}
+
+@keyframes float-sprite {
+  to {
+    transform: translateY(-0.55rem);
+  }
+}
+
+@keyframes spin-coin {
+  to {
+    rotate: 360deg;
+  }
+}
+
+.apex-bg {
+  filter: saturate(1.18) contrast(1.05) brightness(0.82);
+  scale: 1.04;
+}
+
+.apex-visual::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  z-index: 2;
+  background:
+    linear-gradient(90deg, rgb(0 0 0 / 0.68), transparent 52%),
+    radial-gradient(circle at 70% 30%, rgb(236 72 153 / 0.22), transparent 28rem);
+}
+
+.apex-logo,
+.apex-fighter,
+.apex-slash {
+  position: absolute;
+  z-index: 3;
+}
+
+.apex-logo {
+  left: 1.2rem;
+  top: 1.2rem;
+  width: min(48%, 16rem);
+  filter: drop-shadow(0 10px 20px rgb(0 0 0 / 0.5));
+}
+
+.apex-fighter {
+  bottom: -0.35rem;
+  max-height: 78%;
+  object-fit: contain;
+  filter: drop-shadow(0 22px 24px rgb(0 0 0 / 0.55));
+  animation: fighter-bob 2.8s ease-in-out infinite alternate;
+}
+
+.apex-fighter.engineer {
+  right: 15%;
+  width: 25%;
+}
+
+.apex-fighter.galaxy {
+  right: 1%;
+  width: 28%;
+  animation-delay: -1s;
+}
+
+.apex-slash {
+  right: 4%;
+  top: 8%;
+  width: 36%;
+  opacity: 0.7;
+  mix-blend-mode: screen;
+  animation: slash-sweep 2.8s ease-in-out infinite;
+}
+
+@keyframes fighter-bob {
+  to {
+    transform: translateY(-0.65rem) rotate(1deg);
+  }
+}
+
+@keyframes slash-sweep {
+  50% {
+    opacity: 1;
+    transform: translateX(-0.75rem) rotate(-3deg);
+  }
+}
+
+.supporting-projects {
+  display: grid;
+  gap: 0.85rem;
+  margin-top: 0.85rem;
+}
+
 .project-head svg,
 .strength-card svg {
   color: #ec4899;
@@ -456,6 +742,52 @@ a {
   margin-top: 0.35rem;
 }
 
+.electric-wrap {
+  position: relative;
+  isolation: isolate;
+}
+
+.electric-canvas {
+  pointer-events: none;
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  z-index: 2;
+  transform: translate(-50%, -50%);
+}
+
+.electric-content {
+  position: relative;
+  z-index: 3;
+}
+
+.circular-stamp {
+  position: absolute;
+  inset: auto 1.1rem 1.1rem auto;
+  z-index: 1;
+  width: 5.8rem;
+  height: 5.8rem;
+  border-radius: 999px;
+  color: var(--muted-foreground);
+  font-size: 0.58rem;
+  animation: stamp-spin 11s linear infinite;
+  opacity: 0.78;
+}
+
+.circular-stamp span {
+  position: absolute;
+  left: 50%;
+  top: 0;
+  height: 50%;
+  transform-origin: 0 100%;
+}
+
+@keyframes stamp-spin {
+  to {
+    rotate: 360deg;
+  }
+}
+
 @media (min-width: 680px) {
   .section-nav {
     display: flex;
@@ -474,8 +806,12 @@ a {
   }
 
   .profile-grid,
-  .project-grid {
+  .supporting-projects {
     grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+  .featured-grid {
+    grid-template-columns: 1fr;
   }
 
   .strength-grid {
@@ -509,5 +845,32 @@ a {
   .stat-strip,
   .timeline-row {
     grid-template-columns: 1fr;
+  }
+
+  .maze-visual,
+  .apex-visual {
+    min-height: 15rem;
+  }
+
+  .maze-board {
+    inset: 0.75rem;
+    max-width: 14rem;
+  }
+
+  .maze-player {
+    width: 9rem;
+  }
+
+  .apex-logo {
+    width: 62%;
+  }
+
+  .apex-fighter.engineer {
+    right: 22%;
+    width: 32%;
+  }
+
+  .apex-fighter.galaxy {
+    width: 36%;
   }
 }

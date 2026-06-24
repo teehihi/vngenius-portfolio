@@ -13,6 +13,7 @@ import {
   Trophy,
   Users,
 } from "lucide-react";
+import { CircularStamp, ElectricBorder, MouseGlow, ScrollProgress, ShimmerText } from "./components/effects";
 import { Badge, Button, Card, SectionHeader, Stat } from "./components/ui";
 
 const members = [
@@ -92,27 +93,39 @@ const members = [
 
 const projects = [
   {
+    title: "ChayNgayDi MazeHunter",
+    subtitle: "Core game project / pathfinding puzzle",
+    variant: "maze",
+    featured: true,
+    tags: ["Pygame", "Pathfinding", "Pixel art", "Maze logic"],
+    description:
+      "A pixel-art maze game with pathfinding logic, animated characters, collectible objectives, and multiple environment styles. This is the clearest proof of puzzle/gameplay thinking.",
+    links: [{ label: "GitHub", href: "https://github.com/teehihi/ChayNgayDi_MazeHunter" }],
+  },
+  {
+    title: "APEX-CHAOS",
+    subtitle: "Core game project / action roster system",
+    variant: "apex",
+    featured: true,
+    tags: ["React", "Vite", "Game UI", "Character assets"],
+    description:
+      "A production-ready Vite/React game build with strong visual direction: fighter selection UI, animated asset sets, loading/menu scenes, and combat-flavored interface systems.",
+    links: [{ label: "GitHub", href: "https://github.com/Khanh-glitch/APEX-CHAOS" }],
+  },
+  {
     title: "UniQuizz",
-    subtitle: "Quiz flow + AI-generated study content",
+    subtitle: "Supporting project / quiz flow + generated content",
     tags: ["React", "NodeJS", "MongoDB", "AI content"],
     description:
-      "Relevant to Prompt to Play because it already handles question flow, answer states, generated content, and user-facing learning loops.",
+      "Useful support evidence for question flow, answer states, generated content, and user-facing learning loops.",
     links: [
       { label: "Live demo", href: "https://uniquizzdom.vercel.app/" },
       { label: "Frontend", href: "https://github.com/teehihi/UniQuizzFE" },
     ],
   },
   {
-    title: "Maze Runner",
-    subtitle: "Algorithm visualization game",
-    tags: ["Pygame", "Pathfinding", "Heuristics"],
-    description:
-      "Directly useful for puzzle mechanics: pathfinding, board state, search heuristics, and visual explanation of logic.",
-    links: [{ label: "GitHub", href: "https://github.com/teehihi/ChayNgayDi_MazeHunter" }],
-  },
-  {
     title: "XeNow",
-    subtitle: "Full-stack booking platform",
+    subtitle: "Supporting project / full-stack delivery",
     tags: ["React", "NodeJS", "REST API", "MySQL"],
     description:
       "Shows complete product delivery: auth, API integration, loading/error states, data models, and deployment.",
@@ -120,14 +133,6 @@ const projects = [
       { label: "Live demo", href: "https://xenow.vercel.app/" },
       { label: "GitHub", href: "https://github.com/teehihi/xe-now-ui" },
     ],
-  },
-  {
-    title: "DacSanViet",
-    subtitle: "E-commerce system",
-    tags: ["Spring Boot", "MySQL", "WebSocket"],
-    description:
-      "Backend-heavy project evidence from Hau, useful for service structure, realtime updates, and disciplined feature delivery.",
-    links: [{ label: "GitHub", href: "https://github.com/vanhau123w-collab/DacSanViet" }],
   },
 ];
 
@@ -239,8 +244,15 @@ function MemberCard({ member }) {
 }
 
 function ProjectCard({ project }) {
+  const isFeatured = project.featured;
+
   return (
-    <Card className="project-card">
+    <Card className={`project-card ${isFeatured ? "featured-project" : ""}`}>
+      {isFeatured ? (
+        <ElectricBorder color={project.variant === "apex" ? "#ec4899" : "#22c55e"} className="project-visual-border">
+          {project.variant === "apex" ? <ApexVisual /> : <MazeVisual />}
+        </ElectricBorder>
+      ) : null}
       <div className="project-head">
         <div>
           <p>{project.subtitle}</p>
@@ -265,9 +277,42 @@ function ProjectCard({ project }) {
   );
 }
 
+function MazeVisual() {
+  return (
+    <div className="maze-visual">
+      <img src="/showcase/maze-background.png" alt="" className="maze-bg" />
+      <div className="maze-board" aria-hidden="true">
+        {Array.from({ length: 30 }).map((_, index) => (
+          <span key={index} className={index % 7 === 0 ? "node hot" : index % 5 === 0 ? "node key" : "node"} />
+        ))}
+      </div>
+      <img src="/showcase/maze-player-run.png" alt="" className="maze-player" />
+      <img src="/showcase/maze-coin.png" alt="" className="maze-coin" />
+      <img src="/showcase/maze-key.png" alt="" className="maze-key" />
+    </div>
+  );
+}
+
+function ApexVisual() {
+  return (
+    <div className="apex-visual">
+      <img src="/showcase/apex-menu-bg.webp" alt="" className="apex-bg" />
+      <img src="/showcase/apex-logo.webp" alt="" className="apex-logo" />
+      <img src="/showcase/apex-fighter-engineer.webp" alt="" className="apex-fighter engineer" />
+      <img src="/showcase/apex-fighter-galaxy.webp" alt="" className="apex-fighter galaxy" />
+      <img src="/showcase/apex-slash.webp" alt="" className="apex-slash" />
+    </div>
+  );
+}
+
 function App() {
+  const featuredProjects = projects.filter((project) => project.featured);
+  const supportingProjects = projects.filter((project) => !project.featured);
+
   return (
     <main className="page-grid-shell">
+      <ScrollProgress />
+      <MouseGlow />
       <nav className="section-nav">
         {["about", "team", "proof", "plan"].map((item) => (
           <a key={item} href={`#${item}`}>
@@ -283,21 +328,23 @@ function App() {
           </div>
 
           <div className="intro-grid">
-            <div className="hero-avatar-stack">
-              {members.map((member) => (
-                <ProfileAvatar key={member.name} member={member} />
-              ))}
-            </div>
+            <ElectricBorder color="#f97316" className="hero-orbit-card">
+              <div className="hero-avatar-stack">
+                {members.map((member) => (
+                  <ProfileAvatar key={member.name} member={member} />
+                ))}
+              </div>
+              <CircularStamp text="PROMPT TO PLAY 2026" />
+            </ElectricBorder>
             <div className="intro-copy">
               <p className="eyebrow">Prompt to Play 2026 / Puzzle Game Jam</p>
               <h1>
-                A four-person team focused on{" "}
-                <span className="headline-cycle">building</span> a playable puzzle prototype.
+                A four-person team focused on <ShimmerText>building</ShimmerText> a playable puzzle
+                prototype.
               </h1>
               <p>
-                Portfolio page for registration: concise team evidence, public links, and a clear
-                24-hour execution plan. The visual language follows Cong Anh's portfolio style:
-                mono type, soft grid, restrained cards, and small motion.
+                Portfolio page for registration: team evidence, public links, a clear 24-hour plan,
+                and visual proof from the two core game projects: MazeHunter and APEX-CHAOS.
               </p>
               <div className="stat-strip">
                 <Stat value="4" label="members" />
@@ -333,12 +380,17 @@ function App() {
 
         <section id="proof" className="content-section">
           <SectionHeader
-            eyebrow="Selected work"
-            title="Projects that map to the contest"
-            description="Quiz flow, algorithmic visualization, product delivery, and backend systems are the strongest signals for a puzzle game jam."
+            eyebrow="Game proof"
+            title="Core game projects first"
+            description="The portfolio now leads with the two projects that actually prove game feel, visual direction, and playable systems."
           />
-          <div className="project-grid">
-            {projects.map((project) => (
+          <div className="project-grid featured-grid">
+            {featuredProjects.map((project) => (
+              <ProjectCard key={project.title} project={project} />
+            ))}
+          </div>
+          <div className="supporting-projects">
+            {supportingProjects.map((project) => (
               <ProjectCard key={project.title} project={project} />
             ))}
           </div>
