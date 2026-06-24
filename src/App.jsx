@@ -115,10 +115,11 @@ const projects = [
   },
   {
     title: "UniQuizz",
-    subtitle: "Supporting project / quiz flow + generated content",
-    tags: ["React", "NodeJS", "MongoDB", "AI content"],
+    subtitle: "Supporting project / battle quiz + Qbit wardrobe",
+    variant: "uniquizz",
+    tags: ["React", "NodeJS", "MongoDB", "Socket room", "Avatar system"],
     description:
-      "Useful support evidence for question flow, answer states, generated content, and user-facing learning loops.",
+      "A quiz platform with multiplayer rooms, answer flow, generated learning content, and a polished Qbit dressing system for the battle room.",
     links: [
       { label: "Live demo", href: "https://uniquizzdom.vercel.app/" },
       { label: "Frontend", href: "https://github.com/teehihi/UniQuizzFE" },
@@ -127,9 +128,10 @@ const projects = [
   {
     title: "XeNow",
     subtitle: "Supporting project / full-stack delivery",
-    tags: ["React", "NodeJS", "REST API", "MySQL"],
+    variant: "xenow",
+    tags: ["React", "NodeJS", "REST API", "MySQL", "Booking flow"],
     description:
-      "Shows complete product delivery: auth, API integration, loading/error states, data models, and deployment.",
+      "A full-stack vehicle rental product showing auth, search, booking, upload, API integration, loading/error states, data models, and deployment discipline.",
     links: [
       { label: "Live demo", href: "https://xenow.vercel.app/" },
       { label: "GitHub", href: "https://github.com/teehihi/xe-now-ui" },
@@ -151,7 +153,7 @@ const strengths = [
   {
     icon: Code2,
     title: "Browser demo",
-    body: "Vite/React/Phaser-friendly delivery for a fast playable review link.",
+    body: "Vite/React-friendly delivery for a fast playable review link.",
   },
   {
     icon: ShieldCheck,
@@ -271,13 +273,13 @@ function MemberCard({ member }) {
 }
 
 function ProjectCard({ project }) {
-  const isFeatured = project.featured;
+  const hasVisual = Boolean(project.variant);
 
   return (
-    <Card className={`project-card ${isFeatured ? "featured-project" : ""}`}>
-      {isFeatured ? (
-        <ElectricBorder color={project.variant === "apex" ? "#ec4899" : "#22c55e"} className="project-visual-border">
-          {project.variant === "apex" ? <ApexVisual /> : <MazeVisual />}
+    <Card className={`project-card ${hasVisual ? "visual-project" : ""} ${project.featured ? "featured-project" : ""}`}>
+      {hasVisual ? (
+        <ElectricBorder color={project.variant === "apex" ? "#ec4899" : project.variant === "xenow" ? "#38bdf8" : "#22c55e"} className="project-visual-border">
+          <ProjectVisual variant={project.variant} />
         </ElectricBorder>
       ) : null}
       <div className="project-head">
@@ -304,6 +306,13 @@ function ProjectCard({ project }) {
   );
 }
 
+function ProjectVisual({ variant }) {
+  if (variant === "apex") return <ApexVisual />;
+  if (variant === "uniquizz") return <UniQuizzVisual />;
+  if (variant === "xenow") return <XeNowVisual />;
+  return <MazeVisual />;
+}
+
 function MazeVisual() {
   return (
     <div className="maze-visual">
@@ -323,6 +332,57 @@ function MazeVisual() {
   );
 }
 
+function Qbit({ className = "", shirt = "shirt-aohub.svg", pants = "pants-dino.svg", hat = "hat-frog.svg" }) {
+  return (
+    <div className={`qbit ${className}`} aria-hidden="true">
+      <img src="/showcase/uniquizz/body.svg" alt="" className="qbit-layer qbit-body" />
+      <img src={`/showcase/uniquizz/${pants}`} alt="" className="qbit-layer qbit-pants" />
+      <img src="/showcase/uniquizz/shoes-jordans.svg" alt="" className="qbit-layer qbit-shoes" />
+      <img src={`/showcase/uniquizz/${shirt}`} alt="" className="qbit-layer qbit-shirt" />
+      <img src="/showcase/uniquizz/head.svg" alt="" className="qbit-layer qbit-head" />
+      <img src={`/showcase/uniquizz/${hat}`} alt="" className="qbit-layer qbit-hat" />
+    </div>
+  );
+}
+
+function UniQuizzVisual() {
+  const closetItems = [
+    "shirt-aohub.svg",
+    "shirt-aiute.svg",
+    "pants-dino.svg",
+    "pants-cargo.svg",
+    "hat-frog.svg",
+    "shoes-jordans.svg",
+  ];
+
+  return (
+    <div className="uniquizz-visual">
+      <div className="uni-stage">
+        <img src="/showcase/uniquizz/bgBuc.png" alt="" className="uni-podium" />
+        <Qbit className="main-qbit" />
+        <Qbit className="side-qbit left" shirt="shirt-aiute.svg" pants="pants-cargo.svg" hat="hat-frog.svg" />
+        <Qbit className="side-qbit right" shirt="shirt-aohub.svg" pants="pants-cargo.svg" hat="hat-frog.svg" />
+        <div className="uni-room-code">ROOM VNG-26</div>
+      </div>
+      <div className="uni-closet">
+        <div className="uni-tabs">
+          <span>Set</span>
+          <span className="active">Ao</span>
+          <span>Quan</span>
+          <span>Mu</span>
+        </div>
+        <div className="uni-items">
+          {closetItems.map((item) => (
+            <span key={item}>
+              <img src={`/showcase/uniquizz/${item}`} alt="" />
+            </span>
+          ))}
+        </div>
+      </div>
+    </div>
+  );
+}
+
 function ApexVisual() {
   return (
     <div className="apex-visual">
@@ -331,6 +391,36 @@ function ApexVisual() {
       <img src="/showcase/apex-fighter-engineer.webp" alt="" className="apex-fighter engineer" />
       <img src="/showcase/apex-fighter-galaxy.webp" alt="" className="apex-fighter galaxy" />
       <img src="/showcase/apex-slash.webp" alt="" className="apex-slash" />
+    </div>
+  );
+}
+
+function XeNowVisual() {
+  return (
+    <div className="xenow-visual">
+      <div className="xenow-map">
+        <span className="route one" />
+        <span className="route two" />
+        <span className="pin start">A</span>
+        <span className="pin end">B</span>
+      </div>
+      <div className="xenow-panel">
+        <div>
+          <p>Available now</p>
+          <strong>Honda City RS</strong>
+          <span>4.9 rating / automatic / pickup today</span>
+        </div>
+        <div className="xenow-car" aria-hidden="true">
+          <span className="car-body" />
+          <span className="wheel left" />
+          <span className="wheel right" />
+        </div>
+        <div className="xenow-booking">
+          <span>Search</span>
+          <span>Choose</span>
+          <span className="active">Book</span>
+        </div>
+      </div>
     </div>
   );
 }
@@ -354,7 +444,7 @@ function App() {
       <div className="page-reveal mx-auto flex min-h-screen w-full max-w-5xl flex-col px-3 py-4 text-sm leading-loose sm:px-6 lg:px-8">
         <section id="about" className="scroll-mt-24">
           <div className="hero-title">
-            <span>Prompt Party</span>
+            <span>VNGenius</span>
           </div>
 
           <div className="intro-grid">
@@ -374,7 +464,7 @@ function App() {
               </h1>
               <p>
                 Portfolio page for registration: team evidence, public links, a clear 24-hour plan,
-                and visual proof from the two core game projects: MazeHunter and APEX-CHAOS.
+                and visual showcase from MazeHunter, APEX-CHAOS, UniQuizz, and XeNow.
               </p>
               <div className="stat-strip">
                 <Stat value="4" label="members" />
@@ -412,7 +502,7 @@ function App() {
           <SectionHeader
             eyebrow="Game showcase"
             title="Core game projects first"
-            description="The portfolio now leads with the two projects that actually prove game feel, visual direction, and playable systems."
+            description="The portfolio leads with playable systems, then supports them with product-level UI and battle-room experience."
           />
           <div className="project-grid featured-grid">
             {featuredProjects.map((project) => (
