@@ -526,6 +526,16 @@ a {
   isolation: isolate;
 }
 
+.maze-visual {
+  display: grid;
+  grid-template-columns: minmax(0, 1.45fr) minmax(13rem, 0.55fr);
+  gap: 0.55rem;
+  padding: 0.55rem;
+  background:
+    radial-gradient(circle at 12% 8%, rgb(34 197 94 / 0.22), transparent 16rem),
+    linear-gradient(135deg, #06130f, #071a1d 58%, #03100d);
+}
+
 .maze-bg,
 .apex-bg {
   position: absolute;
@@ -538,6 +548,56 @@ a {
 .maze-bg {
   image-rendering: pixelated;
   filter: saturate(1.2) contrast(1.05);
+}
+
+.maze-demo-main,
+.maze-demo-tile {
+  position: relative;
+  overflow: hidden;
+  border: 1px solid rgb(255 255 255 / 0.18);
+  background: rgb(0 0 0 / 0.42);
+  box-shadow: inset 0 0 24px rgb(34 197 94 / 0.12);
+}
+
+.maze-demo-main {
+  min-height: 16.9rem;
+  border-radius: 0.95rem;
+}
+
+.maze-demo-main img,
+.maze-demo-tile img {
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  image-rendering: auto;
+  filter: saturate(1.08) contrast(1.02);
+}
+
+.maze-demo-main span,
+.maze-demo-tile span {
+  position: absolute;
+  left: 0.55rem;
+  bottom: 0.55rem;
+  border: 1px solid rgb(255 255 255 / 0.18);
+  border-radius: 999px;
+  background: rgb(0 0 0 / 0.58);
+  padding: 0.16rem 0.48rem;
+  color: rgb(255 255 255 / 0.9);
+  font-size: 0.64rem;
+  backdrop-filter: blur(8px);
+}
+
+.maze-demo-strip {
+  display: grid;
+  grid-template-rows: repeat(3, minmax(0, 1fr));
+  gap: 0.55rem;
+  min-height: 16.9rem;
+}
+
+.maze-demo-tile {
+  min-height: 5.25rem;
+  border-radius: 0.85rem;
 }
 
 .maze-board {
@@ -850,6 +910,29 @@ a {
   .maze-visual,
   .apex-visual {
     min-height: 15rem;
+  }
+
+  .maze-visual {
+    grid-template-columns: 1fr;
+  }
+
+  .maze-demo-main,
+  .maze-demo-strip {
+    min-height: 0;
+  }
+
+  .maze-demo-main {
+    aspect-ratio: 16 / 10;
+  }
+
+  .maze-demo-strip {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    grid-template-rows: none;
+  }
+
+  .maze-demo-tile {
+    aspect-ratio: 1;
+    min-height: 0;
   }
 
   .maze-board {

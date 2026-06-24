@@ -175,6 +175,25 @@ const navItems = [
   ["plan", "Plan"],
 ];
 
+const mazeDemoGifs = [
+  {
+    label: "Hunter chase",
+    src: "https://media4.giphy.com/media/AoliG8SixDEgCZe3Hi/giphy.gif",
+  },
+  {
+    label: "Gameplay",
+    src: "https://media3.giphy.com/media/v1.Y2lkPTc5MGI3NjExOGQ3NjU3dHplYWlxcTV1ZGw0aDYzdzUxZXVseHE3bGhweTVhMG1tdSZlcD12MV9pbnRlcm5hbF9naWZfYnlfaWQmY3Q9Zw/CTF3ctDQNVei069FBQ/giphy.gif",
+  },
+  {
+    label: "Quiz gate",
+    src: "https://media4.giphy.com/media/r5CpASYBt3VdaFHhLM/giphy.gif",
+  },
+  {
+    label: "AI path",
+    src: "https://media3.giphy.com/media/1WuKxMJwcY1Gecpo08/giphy.gif",
+  },
+];
+
 function ExternalLink({ href, children }) {
   return (
     <a href={href} target="_blank" rel="noreferrer" className="inline-link">
@@ -288,15 +307,18 @@ function ProjectCard({ project }) {
 function MazeVisual() {
   return (
     <div className="maze-visual">
-      <img src="/showcase/maze-background.png" alt="" className="maze-bg" />
-      <div className="maze-board" aria-hidden="true">
-        {Array.from({ length: 30 }).map((_, index) => (
-          <span key={index} className={index % 7 === 0 ? "node hot" : index % 5 === 0 ? "node key" : "node"} />
+      <div className="maze-demo-main">
+        <img src={mazeDemoGifs[0].src} alt={`MazeHunter ${mazeDemoGifs[0].label} demo`} loading="lazy" />
+        <span>{mazeDemoGifs[0].label}</span>
+      </div>
+      <div className="maze-demo-strip">
+        {mazeDemoGifs.slice(1).map((gif) => (
+          <div key={gif.label} className="maze-demo-tile">
+            <img src={gif.src} alt={`MazeHunter ${gif.label} demo`} loading="lazy" />
+            <span>{gif.label}</span>
+          </div>
         ))}
       </div>
-      <img src="/showcase/maze-player-run.png" alt="" className="maze-player" />
-      <img src="/showcase/maze-coin.png" alt="" className="maze-coin" />
-      <img src="/showcase/maze-key.png" alt="" className="maze-key" />
     </div>
   );
 }
