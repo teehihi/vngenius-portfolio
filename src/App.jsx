@@ -332,7 +332,7 @@ function MazeVisual() {
   );
 }
 
-function Qbit({ className = "", shirt = "shirt-aohub.svg", pants = "pants-dino.svg", hat = "hat-frog.svg" }) {
+function Qbit({ className = "", shirt = "shirt-ueh.svg", pants = "pants-dino.svg", hat = "hat-frog.svg" }) {
   return (
     <div className={`qbit ${className}`} aria-hidden="true">
       <img src="/showcase/uniquizz/body.svg" alt="" className="qbit-layer qbit-body" />
@@ -347,8 +347,12 @@ function Qbit({ className = "", shirt = "shirt-aohub.svg", pants = "pants-dino.s
 
 function UniQuizzVisual() {
   const closetItems = [
-    "shirt-aohub.svg",
+    "shirt-mu.svg",
+    "shirt-ueh.svg",
+    "shirt-asn.svg",
     "shirt-aiute.svg",
+    "shirt-brazil.svg",
+    "shirt-anime.svg",
     "pants-dino.svg",
     "pants-cargo.svg",
     "hat-frog.svg",
@@ -360,8 +364,8 @@ function UniQuizzVisual() {
       <div className="uni-stage">
         <img src="/showcase/uniquizz/bgBuc.png" alt="" className="uni-podium" />
         <Qbit className="main-qbit" />
-        <Qbit className="side-qbit left" shirt="shirt-aiute.svg" pants="pants-cargo.svg" hat="hat-frog.svg" />
-        <Qbit className="side-qbit right" shirt="shirt-aohub.svg" pants="pants-cargo.svg" hat="hat-frog.svg" />
+        <Qbit className="side-qbit left" shirt="shirt-mu.svg" pants="pants-cargo.svg" hat="hat-frog.svg" />
+        <Qbit className="side-qbit right" shirt="shirt-aiute.svg" pants="pants-cargo.svg" hat="hat-frog.svg" />
         <div className="uni-room-code">ROOM VNG-26</div>
       </div>
       <div className="uni-closet">

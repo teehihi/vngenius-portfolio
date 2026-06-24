@@ -909,7 +909,7 @@ a {
 
 .uni-items span {
   display: grid;
-  min-height: 4rem;
+  min-height: 3.62rem;
   place-items: center;
   border: 1px solid rgb(255 255 255 / 0.12);
   border-radius: 0.75rem;
@@ -917,8 +917,8 @@ a {
 }
 
 .uni-items img {
-  max-width: 78%;
-  max-height: 3.35rem;
+  max-width: 82%;
+  max-height: 3rem;
   object-fit: contain;
   filter: drop-shadow(0 0.55rem 0.65rem rgb(0 0 0 / 0.35));
 }
