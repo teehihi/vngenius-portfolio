@@ -391,13 +391,47 @@ function UniQuizzVisual() {
 }
 
 function ApexVisual() {
+  const roster = [
+    ["Engineer", "fighter-engineer.webp"],
+    ["Galaxy", "fighter-galaxy.webp"],
+    ["Ice", "fighter-ice.webp"],
+    ["Ninja", "fighter-ninja.webp"],
+  ];
+  const vfx = [
+    ["Galaxy impact", "galaxy-impact.webp"],
+    ["Engineer blast", "engineer-explosion.webp"],
+    ["Ice kit", "ice-main.webp"],
+    ["String slash", "string-slash.webp"],
+  ];
+
   return (
     <div className="apex-visual">
-      <img src="/showcase/apex-menu-bg.webp" alt="" className="apex-bg" />
-      <img src="/showcase/apex-logo.webp" alt="" className="apex-logo" />
-      <img src="/showcase/apex-fighter-engineer.webp" alt="" className="apex-fighter engineer" />
-      <img src="/showcase/apex-fighter-galaxy.webp" alt="" className="apex-fighter galaxy" />
-      <img src="/showcase/apex-slash.webp" alt="" className="apex-slash" />
+      <div className="apex-select-main">
+        <img src="/showcase/apex/fighter-pick-bg.webp" alt="" className="apex-pick-bg" />
+        <img src="/showcase/apex-logo.webp" alt="" className="apex-logo" />
+        <div className="apex-versus">
+          <img src="/showcase/apex/picked-engineer.webp" alt="" />
+          <span>VS</span>
+          <img src="/showcase/apex/picked-galaxy.webp" alt="" />
+        </div>
+        <div className="apex-roster">
+          {roster.map(([label, src]) => (
+            <span key={label}>
+              <img src={`/showcase/apex/${src}`} alt="" />
+              <em>{label}</em>
+            </span>
+          ))}
+        </div>
+        <img src="/showcase/apex/fight-button.webp" alt="" className="apex-fight" />
+      </div>
+      <div className="apex-demo-strip">
+        {vfx.map(([label, src]) => (
+          <div key={label} className="apex-demo-tile">
+            <img src={`/showcase/apex/${src}`} alt="" />
+            <span>{label}</span>
+          </div>
+        ))}
+      </div>
     </div>
   );
 }
