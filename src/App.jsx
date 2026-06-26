@@ -2,6 +2,7 @@ import {
   ArrowUpRight,
   Bot,
   Code2,
+  FileDown,
   Github,
   GraduationCap,
   Linkedin,
@@ -13,7 +14,16 @@ import {
   Trophy,
   Users,
 } from "lucide-react";
-import { CircularStamp, ElectricBorder, MouseGlow, ScrollProgress, ShimmerText } from "./components/effects";
+import {
+  ClickEffects,
+  ElectricBorder,
+  FluidGradientText,
+  InteractiveGrid,
+  MouseGlow,
+  ScrollProgress,
+  ShimmerText,
+  ThemeToggle,
+} from "./components/effects";
 import { Badge, Button, Card, SectionHeader, Stat } from "./components/ui";
 
 const members = [
@@ -31,6 +41,7 @@ const members = [
       "Builds React/Vite products, REST API flows, reusable UI, and mobile prototypes. AI evaluation experience helps the team keep generated outputs consistent.",
     skills: ["React", "Vite", "NodeJS", "REST API", "MySQL", "MongoDB", "React Native", "AI evaluation"],
     evidence: [
+      "APEX CHAOS - co-developed with QK/Khanh, focusing on React/Vite implementation, UI flow, and playable browser delivery.",
       "XeNow - full-stack vehicle rental platform with booking, auth, upload, and responsive UI.",
       "UniQuizz - quiz web app with reusable components and game-like answer flow.",
       "Outlier AI Trainer / Evaluator - response ranking, prompt rewriting, QA workflows.",
@@ -47,11 +58,11 @@ const members = [
     linkedin: "https://www.linkedin.com/in/quockhanh-le/",
     email: "mencan308@gmail.com",
     summary:
-      "Game designer and gameplay developer behind APEX CHAOS, a playable 1v1 browser autobattler built from concept to deployment with an AI-assisted production workflow.",
+      "Game designer and gameplay co-developer behind APEX CHAOS, a playable 1v1 browser autobattler co-built with Tee from concept to deployment through an AI-assisted production workflow.",
     skills: ["Game design", "Autobattler mechanics", "Champion kits", "Game balance", "GDD writing", "Playtesting", "Canvas", "OpenAI Codex"],
     evidence: [
-      "APEX CHAOS - sole creator, game designer, and gameplay developer in an intensive two-week sprint.",
-      "Designed core combat rules, eight champions, targeting, states, counterplay, and balance constraints.",
+      "APEX CHAOS - co-developed with Tee/QK partnership: Khanh led game design and champion systems while Tee supported implementation and delivery.",
+      "Designed core combat rules, eight champions, targeting, states, counterplay, and balance constraints with shared playtesting.",
       "QA background from reviewing 10,000+ data samples helps catch logic, consistency, and edge-case defects.",
     ],
   },
@@ -108,9 +119,9 @@ const projects = [
     subtitle: "Core game project / 1v1 autobattler",
     variant: "apex",
     featured: true,
-    tags: ["React", "Vite", "Canvas", "GDD", "Combat balance"],
+    tags: ["React", "Vite", "Canvas", "Co-developed", "Combat balance"],
     description:
-      "Khanh's playable browser prototype with combat rules, eight distinct champions, fighter selection UI, animated asset sets, and a production loop shaped through GDDs, Codex specs, playtesting, and balance tuning.",
+      "A co-developed browser autobattler by Tee and QK/Khanh, with combat rules, eight distinct champions, fighter selection UI, animated asset sets, and a production loop shaped through GDDs, Codex specs, playtesting, and balance tuning.",
     links: [
       { label: "Live demo", href: "https://apexchaos.netlify.app/" },
       { label: "GitHub", href: "https://github.com/Khanh-glitch/APEX-CHAOS" },
@@ -165,19 +176,12 @@ const strengths = [
   },
 ];
 
-const timeline = [
-  ["00-03", "Lock the mechanic", "Define one puzzle rule, player goal, and AI contribution."],
-  ["03-10", "Build the loop", "Playable board, input model, scoring, fail/win states."],
-  ["10-16", "Add AI carefully", "Hint, generated challenge, or explanation with clear fallback."],
-  ["16-21", "Polish the feel", "Tutorial, feedback, rhythm, responsive layout, bug pass."],
-  ["21-24", "Package and pitch", "Backup build, final demo path, short presentation."],
-];
-
 const navItems = [
   ["about", "About"],
   ["team", "Team"],
   ["showcase", "Showcase"],
-  ["plan", "Plan"],
+  ["loadout", "Loadout"],
+  ["challenge", "Challenge"],
 ];
 
 const mazeDemoGifs = [
@@ -212,6 +216,14 @@ function ProfileAvatar({ member }) {
   return (
     <div className="profile-avatar" aria-hidden="true">
       <span>{member.alias.slice(0, 2).toUpperCase()}</span>
+    </div>
+  );
+}
+
+function TeamLogo() {
+  return (
+    <div className="team-logo">
+      <img src="/team-logo-vngenius-v3.png" alt="VNGenius team logo" />
     </div>
   );
 }
@@ -281,7 +293,11 @@ function ProjectCard({ project }) {
   return (
     <Card className={`project-card ${hasVisual ? "visual-project" : ""} ${project.featured ? "featured-project" : ""}`}>
       {hasVisual ? (
-        <ElectricBorder color={project.variant === "apex" ? "#ec4899" : project.variant === "xenow" ? "#38bdf8" : "#22c55e"} className="project-visual-border">
+        <ElectricBorder
+          color={project.variant === "apex" ? "#ec4899" : project.variant === "xenow" ? "#38bdf8" : "#22c55e"}
+          borderRadius={12}
+          className="project-visual-border"
+        >
           <ProjectVisual variant={project.variant} />
         </ElectricBorder>
       ) : null}
@@ -472,44 +488,65 @@ function App() {
   return (
     <main className="page-grid-shell">
       <ScrollProgress />
+      <InteractiveGrid
+        clickInteraction
+        cursorTrail
+        trailMode="hover"
+        trailColor="#0073ff"
+        hoverColor="#0073ff"
+        gridSize={58}
+        radius={310}
+        repulsionStrength={-0.66}
+        motionSpeed={0.68}
+      />
       <MouseGlow />
-      <nav className="section-nav">
-        {navItems.map(([id, label]) => (
-          <a key={id} href={`#${id}`}>
-            {label}
+      <ClickEffects />
+      <nav className="section-nav" aria-label="Portfolio navigation">
+        <a href="#about" className="nav-signature" aria-label="Back to top">
+          VN
+        </a>
+        <div className="nav-links">
+          {navItems.map(([id, label]) => (
+            <a key={id} href={`#${id}`}>
+              {label}
+            </a>
+          ))}
+        </div>
+        <div className="nav-actions">
+          <ThemeToggle />
+          <a href="#team" aria-label="CV status">
+            <FileDown className="h-5 w-5" />
           </a>
-        ))}
+          <a href="https://github.com/teehihi/vngenius-portfolio" target="_blank" rel="noreferrer" aria-label="Reference GitHub">
+            <Github className="h-5 w-5" />
+          </a>
+        </div>
       </nav>
 
       <div className="page-reveal mx-auto flex min-h-screen w-full max-w-5xl flex-col px-3 py-4 text-sm leading-loose sm:px-6 lg:px-8">
         <section id="about" className="scroll-mt-24">
           <div className="hero-title">
-            <span>VNGenius</span>
+            <FluidGradientText text="VNGenius" />
           </div>
 
           <div className="intro-grid">
-            <ElectricBorder color="#f97316" className="hero-orbit-card">
-              <div className="hero-avatar-stack">
-                {members.map((member) => (
-                  <ProfileAvatar key={member.name} member={member} />
-                ))}
-              </div>
-              <CircularStamp text="PROMPT TO PLAY 2026" />
+            <ElectricBorder color="#f97316" speed={0.75} chaos={0.08} borderRadius={999} className="hero-orbit-card">
+              <TeamLogo />
             </ElectricBorder>
             <div className="intro-copy">
-              <p className="eyebrow">Prompt to Play 2026 / Puzzle Game Jam</p>
+              <p className="eyebrow">Software x Game Development Team</p>
               <h1>
-                A four-person team focused on <ShimmerText>building</ShimmerText> a playable puzzle
-                prototype.
+                We build software, games, and <ShimmerText>AI-powered</ShimmerText> experiences.
               </h1>
               <p>
-                Portfolio page for registration: team evidence, public links, a clear 24-hour plan,
-                and visual showcase from MazeHunter, APEX-CHAOS, UniQuizz, and XeNow.
+                VNGenius is a multidisciplinary student team specializing in software development,
+                game development, AI integration, rapid prototyping and interactive product
+                development.
               </p>
               <div className="stat-strip">
-                <Stat value="4" label="members" />
-                <Stat value="24h" label="jam window" />
-                <Stat value="Web" label="demo target" />
+                <Stat value="4" label="Core Members" />
+                <Stat value="6+" label="Projects" />
+                <Stat value="SW" label="Software Team" />
               </div>
               <div className="hero-actions">
                 <Button as="a" href="#team">
@@ -528,8 +565,8 @@ function App() {
         <section id="team" className="content-section">
           <SectionHeader
             eyebrow="Team"
-            title="Role-based roster"
-            description="Each profile stays compact and evidence-driven, so the page feels like a portfolio rather than a pitch deck."
+            title="Core Team"
+            description="A cross-functional group combining engineering, game design, backend systems, QA, and rapid prototyping across shared projects."
           />
           <div className="profile-grid">
             {members.map((member) => (
@@ -541,8 +578,8 @@ function App() {
         <section id="showcase" className="content-section">
           <SectionHeader
             eyebrow="Game showcase"
-            title="Core game projects first"
-            description="The portfolio leads with playable systems, then supports them with product-level UI and battle-room experience."
+            title="Featured Projects"
+            description="Selected work across playable systems, product-level interfaces, AI-assisted learning, and interactive browser experiences."
           />
           <div className="project-grid featured-grid">
             {featuredProjects.map((project) => (
@@ -572,24 +609,25 @@ function App() {
           </div>
         </section>
 
-        <section id="plan" className="content-section">
-          <SectionHeader eyebrow="Runbook" title="24-hour build plan" />
-          <Card className="timeline-card">
-            {timeline.map(([time, title, body]) => (
-              <div key={time} className="timeline-row">
-                <span>{time}</span>
-                <div>
-                  <h3>{title}</h3>
-                  <p>{body}</p>
-                </div>
-              </div>
-            ))}
+        <section id="challenge" className="content-section">
+          <SectionHeader
+            eyebrow="Current Challenge"
+            title="Prompt-to-Play 2026"
+            description="VNGGames x OpenAI"
+          />
+          <Card className="strength-card">
+            <Trophy className="h-5 w-5" />
+            <h3>24-hour AI puzzle game challenge</h3>
+            <p>
+              We're currently participating in Prompt-to-Play 2026, building an AI-powered puzzle
+              game within a 24-hour challenge.
+            </p>
           </Card>
         </section>
 
         <section className="footer-note">
-          <p>Built with care for Prompt to Play 2026.</p>
-          <p>Public links are included; pending CVs are marked transparently.</p>
+          <p>Built with care by VNGenius.</p>
+          <p>Public links are included; project context is marked transparently.</p>
         </section>
       </div>
     </main>
