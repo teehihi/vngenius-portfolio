@@ -732,11 +732,73 @@ a {
   color: var(--muted-foreground);
 }
 
+.profile-role {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.35rem;
+  transition: color 180ms ease;
+}
+
+.profile-role svg,
+.profile-line svg,
+.profile-group h4 svg {
+  color: #f97316;
+  opacity: 0.72;
+  transition:
+    color 180ms ease,
+    opacity 180ms ease;
+}
+
+.profile-card:hover .profile-role {
+  color: var(--foreground);
+}
+
+.profile-card:hover .profile-role svg,
+.profile-card:hover .profile-line svg,
+.profile-card:hover .profile-group h4 svg {
+  opacity: 0.95;
+}
+
+.profile-tagline {
+  margin-top: 0.9rem;
+  color: var(--foreground);
+  font-weight: 500;
+}
+
 .profile-line {
   display: flex;
   align-items: center;
   gap: 0.45rem;
   margin-top: 0.75rem;
+}
+
+.profile-group {
+  margin-top: 0.95rem;
+  border-top: 1px solid color-mix(in oklch, var(--line) 72%, transparent);
+  padding-top: 0.8rem;
+}
+
+.profile-group h4 {
+  display: flex;
+  align-items: center;
+  gap: 0.4rem;
+  color: var(--foreground);
+  font-size: 0.78rem;
+  font-weight: 600;
+  letter-spacing: 0;
+}
+
+.focus-list {
+  display: grid;
+  gap: 0.34rem;
+  margin-top: 0.55rem;
+  padding-left: 1rem;
+  list-style: disc;
+  color: var(--muted-foreground);
+}
+
+.focus-list li::marker {
+  color: #f97316;
 }
 
 .card-copy {
@@ -769,6 +831,31 @@ a {
   border-left: 1px solid var(--line);
   padding-left: 0.7rem;
   color: var(--muted-foreground);
+}
+
+.project-note-list p {
+  display: grid;
+  gap: 0.08rem;
+  transition:
+    color 180ms ease,
+    transform 180ms ease;
+}
+
+.project-note-list p:hover {
+  color: var(--foreground);
+  transform: translateY(-2px);
+}
+
+.project-note-list strong {
+  color: var(--foreground);
+  font-weight: 600;
+}
+
+.team-summary-strip {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 0.85rem;
+  margin-top: 0.85rem;
 }
 
 .inline-link {
@@ -1657,6 +1744,10 @@ a {
   }
 
   .strength-grid {
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+  }
+
+  .team-summary-strip {
     grid-template-columns: repeat(4, minmax(0, 1fr));
   }
 }

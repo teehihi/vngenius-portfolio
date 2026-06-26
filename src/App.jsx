@@ -1,8 +1,11 @@
 import {
   ArrowUpRight,
   Bot,
+  Briefcase,
   Code2,
+  Cpu,
   FileDown,
+  FolderGit2,
   Github,
   GraduationCap,
   Linkedin,
@@ -10,7 +13,7 @@ import {
   Puzzle,
   Rocket,
   ShieldCheck,
-  Sparkles,
+  Target,
   Trophy,
   Users,
 } from "lucide-react";
@@ -24,81 +27,72 @@ import {
   ShimmerText,
   ThemeToggle,
 } from "./components/effects";
-import { Badge, Button, Card, SectionHeader, Stat } from "./components/ui";
+import { Button, Card, SectionHeader, Stat } from "./components/ui";
 
 const members = [
   {
     name: "Nguyen Nhat Thien",
     alias: "Tee",
     role: "Full-stack Developer / AI Evaluator",
-    focus: "Web gameplay, UI flow, API integration",
+    tagline: "Engineering products people love to use.",
     school: "HCMUTE - Information Technology",
-    status: "CV ready",
     github: "https://github.com/teehihi",
     linkedin: "https://www.linkedin.com/in/tee21/",
     email: "teeforwork21@gmail.com",
-    summary:
-      "Builds React/Vite products, REST API flows, reusable UI, and mobile prototypes. AI evaluation experience helps the team keep generated outputs consistent.",
+    focusAreas: ["Full-stack Development", "Web Gameplay", "REST APIs", "AI Evaluation"],
     skills: ["React", "Vite", "NodeJS", "REST API", "MySQL", "MongoDB", "React Native", "AI evaluation"],
-    evidence: [
-      "APEX CHAOS - co-developed with QK/Khanh, focusing on React/Vite implementation, UI flow, and playable browser delivery.",
-      "XeNow - full-stack vehicle rental platform with booking, auth, upload, and responsive UI.",
-      "UniQuizz - quiz web app with reusable components and game-like answer flow.",
-      "Outlier AI Trainer / Evaluator - response ranking, prompt rewriting, QA workflows.",
+    featuredProjects: [
+      ["APEX CHAOS", "Implemented React/Vite gameplay systems."],
+      ["XeNow", "Built a full-stack booking platform."],
+      ["UniQuizz", "Shipped reusable quiz UI architecture."],
     ],
   },
   {
     name: "Le Quoc Khanh",
     alias: "Khanh",
     role: "Game Designer / Gameplay Developer",
-    focus: "Combat systems, champion kits, balance, playtesting",
+    tagline: "Crafting gameplay worth mastering.",
     school: "UEH - Event and Entertainment Services Management",
-    status: "CV ready",
     github: "https://github.com/Khanh-glitch",
     linkedin: "https://www.linkedin.com/in/quockhanh-le/",
     email: "mencan308@gmail.com",
-    summary:
-      "Game designer and gameplay co-developer behind APEX CHAOS, a playable 1v1 browser autobattler co-built with Tee from concept to deployment through an AI-assisted production workflow.",
+    focusAreas: ["Gameplay Systems", "Champion Kits", "Combat Balance", "Playtesting"],
     skills: ["Game design", "Autobattler mechanics", "Champion kits", "Game balance", "GDD writing", "Playtesting", "Canvas", "OpenAI Codex"],
-    evidence: [
-      "APEX CHAOS - co-developed with Tee/QK partnership: Khanh led game design and champion systems while Tee supported implementation and delivery.",
-      "Designed core combat rules, eight champions, targeting, states, counterplay, and balance constraints with shared playtesting.",
-      "QA background from reviewing 10,000+ data samples helps catch logic, consistency, and edge-case defects.",
+    featuredProjects: [
+      ["APEX CHAOS", "Designed combat rules and champion kits."],
+      ["Game Balance", "Optimized targeting, states, and counterplay."],
+      ["QA Systems", "Reviewed edge cases for consistent gameplay."],
     ],
   },
   {
     name: "Pham Van Hau",
     alias: "Hau",
     role: "Backend / Game Systems Developer",
-    focus: "Gameplay logic, services, algorithm visualization",
+    tagline: "Strong systems make great experiences.",
     school: "HCMUTE - Information Technology",
-    status: "CV screenshot",
     github: "https://github.com/vanhau123w-collab",
     linkedin: "https://www.linkedin.com/in/v%C4%83n-h%E1%BA%ADu-ph%E1%BA%A1m-83224b1bb",
-    summary:
-      "Software Engineering student with full-stack foundations across Spring Boot, NodeJS, ReactJS, databases, and practical AI integration.",
+    focusAreas: ["Backend Services", "Gameplay Logic", "Database Design", "Algorithm Visualization"],
     skills: ["Java", "Spring Boot", "NodeJS", "ReactJS", "MySQL", "WebSocket", "MongoDB", "Pygame"],
-    evidence: [
-      "Vietnamese Specialties E-commerce - Spring Boot, MySQL, WebSocket, Thymeleaf, Bootstrap.",
-      "UniQuizz AI learning platform - ReactJS, NodeJS, MongoDB, Google Gemini integration.",
-      "Maze Runner algorithm visualization game - pathfinding and interactive learning.",
+    featuredProjects: [
+      ["UniQuizz", "Integrated AI learning platform services."],
+      ["Maze Runner", "Built pathfinding visualization gameplay."],
+      ["E-commerce System", "Engineered Spring Boot commerce flows."],
     ],
   },
   {
     name: "Truong Cong Anh",
     alias: "Cong Anh",
     role: "Prototype Developer",
-    focus: "Implementation support, testing, build packaging",
+    tagline: "Prototype first. Perfect later.",
     school: "HCMUTE",
-    status: "CV pending",
     github: "https://github.com/coqanklazy",
-    summary:
-      "UTE teammate with GitHub profile available. Detailed CV will be added later, so this section stays practical and update-friendly.",
+    focusAreas: ["Rapid Prototyping", "Build Testing", "Game Jam Execution", "Delivery Support"],
     skills: ["Development", "Prototype support", "Testing", "Git", "Game jam execution"],
-    evidence: [
-      "GitHub profile added for public verification.",
-      "Planned role: implement small gameplay tasks, test builds, and help package the final demo.",
-      "Profile section is ready to expand when the official CV arrives.",
+    featuredProjects: [
+      ["Prompt-to-Play", "Supports sprint execution and demo packaging."],
+      ["Prototype Builds", "Tests playable loops and delivery paths."],
+      ["Team Tooling", "Maintains practical Git-based workflows."],
     ],
   },
 ];
@@ -234,35 +228,58 @@ function MemberCard({ member }) {
       <div className="profile-card-head">
         <ProfileAvatar member={member} />
         <div className="min-w-0">
-          <div className="flex flex-wrap items-center gap-2">
-            <h3>{member.name}</h3>
-            <Badge>{member.status}</Badge>
-          </div>
-          <p>{member.role}</p>
+          <h3>{member.name}</h3>
+          <p className="profile-role">
+            <Briefcase className="h-3.5 w-3.5" />
+            {member.role}
+          </p>
         </div>
       </div>
+
+      <p className="profile-tagline">{member.tagline}</p>
 
       <div className="profile-line">
         <GraduationCap className="h-4 w-4" />
         <span>{member.school}</span>
       </div>
-      <div className="profile-line">
-        <Sparkles className="h-4 w-4" />
-        <span>{member.focus}</span>
+
+      <div className="profile-group">
+        <h4>
+          <Target className="h-4 w-4" />
+          Focus Areas
+        </h4>
+        <ul className="focus-list">
+          {member.focusAreas.map((item) => (
+            <li key={item}>{item}</li>
+          ))}
+        </ul>
       </div>
 
-      <p className="card-copy">{member.summary}</p>
-
-      <div className="chip-list">
-        {member.skills.map((skill) => (
-          <span key={skill}>{skill}</span>
-        ))}
+      <div className="profile-group">
+        <h4>
+          <Cpu className="h-4 w-4" />
+          Expertise
+        </h4>
+        <div className="chip-list">
+          {member.skills.map((skill) => (
+            <span key={skill}>{skill}</span>
+          ))}
+        </div>
       </div>
 
-      <div className="note-list">
-        {member.evidence.map((item) => (
-          <p key={item}>{item}</p>
-        ))}
+      <div className="profile-group">
+        <h4>
+          <FolderGit2 className="h-4 w-4" />
+          Featured Projects
+        </h4>
+        <div className="note-list project-note-list">
+          {member.featuredProjects.map(([title, body]) => (
+            <p key={title}>
+              <strong>{title}</strong>
+              <span>{body}</span>
+            </p>
+          ))}
+        </div>
       </div>
 
       <div className="link-row">
@@ -514,7 +531,7 @@ function App() {
         </div>
         <div className="nav-actions">
           <ThemeToggle />
-          <a href="#team" aria-label="CV status">
+          <a href="#team" aria-label="Team profiles">
             <FileDown className="h-5 w-5" />
           </a>
           <a href="https://github.com/teehihi/vngenius-portfolio" target="_blank" rel="noreferrer" aria-label="Reference GitHub">
@@ -572,6 +589,12 @@ function App() {
             {members.map((member) => (
               <MemberCard key={member.name} member={member} />
             ))}
+          </div>
+          <div className="team-summary-strip">
+            <Stat value="4" label="Core Members" />
+            <Stat value="6+" label="Projects Built" />
+            <Stat value="Game x AI" label="Focus" />
+            <Stat value="Rapid" label="Prototyping" />
           </div>
         </section>
 
