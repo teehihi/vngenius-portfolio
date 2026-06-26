@@ -1,7 +1,7 @@
 # VNGenius Portfolio
 
 <p align="center">
-  <img src="public/team-logo-vngenius-v3.png" alt="VNGenius team logo" width="220" />
+  <img src="public/team-logo-vngenius-v3.png" alt="VNGenius team logo" width="260" />
 </p>
 
 A long-term portfolio website for **VNGenius**, a multidisciplinary student team building software, games, and AI-powered interactive experiences.
