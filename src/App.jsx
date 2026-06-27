@@ -424,42 +424,28 @@ function UniQuizzVisual() {
 }
 
 function ApexVisual() {
-  const roster = [
-    ["Engineer", "fighter-engineer.webp"],
-    ["Galaxy", "fighter-galaxy.webp"],
-    ["Ice", "fighter-ice.webp"],
-    ["Ninja", "fighter-ninja.webp"],
-  ];
-  const picks = [
-    ["P1 setup", "picked-engineer.webp"],
-    ["P2 setup", "picked-galaxy.webp"],
-    ["Ice pick", "picked-ice.webp"],
-    ["Ninja pick", "picked-ninja.webp"],
+  const demos = [
+    [
+      "Combat in Action",
+      "https://media3.giphy.com/media/v1.Y2lkPTc5MGI3NjExaXUzeHpvcmRwbHFrampuaDdhMWlocjRtc3kxcG1hMWp5MWNud21leCZlcD12MV9pbnRlcm5hbF9naWZfYnlfaWQmY3Q9Zw/xGJhfJEIVrRScFvCUF/giphy.gif",
+    ],
+    ["Entering the Arena", "https://files.catbox.moe/m1bf90.gif"],
+    [
+      "Champion Select",
+      "https://media4.giphy.com/media/v1.Y2lkPTc5MGI3NjExOGdnMHkxNjZ0MHE0bHZ3Z3Vobnhvdzc1MTl3YTJpNW1yYzhiNzNociZlcD12MV9pbnRlcm5hbF9naWZfYnlfaWQmY3Q9Zw/OgLWze8SxRF6xgKJFV/giphy.gif",
+    ],
   ];
 
   return (
     <div className="apex-visual">
       <div className="apex-select-main">
-        <img src="/showcase/apex-menu-bg.webp" alt="" className="apex-pick-bg" />
-        <img src="/showcase/apex-logo.webp" alt="" className="apex-logo" />
-        <div className="apex-pick-row">
-          <img src="/showcase/apex/picked-engineer.webp" alt="" />
-          <img src="/showcase/apex/picked-galaxy.webp" alt="" />
-        </div>
-        <div className="apex-roster">
-          {roster.map(([label, src]) => (
-            <span key={label}>
-              <img src={`/showcase/apex/${src}`} alt="" />
-              <em>{label}</em>
-            </span>
-          ))}
-        </div>
-        <img src="/showcase/apex/fight-button.webp" alt="" className="apex-fight" />
+        <img src={demos[0][1]} alt="Apex Chaos gameplay demo" loading="lazy" />
+        <span>{demos[0][0]}</span>
       </div>
       <div className="apex-demo-strip">
-        {picks.map(([label, src]) => (
+        {demos.slice(1).map(([label, src]) => (
           <div key={label} className="apex-demo-tile">
-            <img src={`/showcase/apex/${src}`} alt="" />
+            <img src={src} alt={`Apex Chaos ${label} demo`} loading="lazy" />
             <span>{label}</span>
           </div>
         ))}
