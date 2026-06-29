@@ -34,6 +34,7 @@ const members = [
     name: "Nguyen Nhat Thien",
     alias: "Tee",
     role: "Full-stack Developer / AI Evaluator",
+    avatar: "/team/tee.webp",
     tagline: "Engineering products people love to use.",
     school: "HCMUTE - Information Technology",
     github: "https://github.com/teehihi",
@@ -51,6 +52,7 @@ const members = [
     name: "Le Quoc Khanh",
     alias: "Khanh",
     role: "Game Designer / Gameplay Developer",
+    avatar: "/team/men.webp",
     tagline: "Crafting gameplay worth mastering.",
     school: "UEH - Event and Entertainment Services Management",
     github: "https://github.com/Khanh-glitch",
@@ -68,6 +70,7 @@ const members = [
     name: "Pham Van Hau",
     alias: "Hau",
     role: "Backend / Game Systems Developer",
+    avatar: "/team/hau.webp",
     tagline: "Strong systems make great experiences.",
     school: "HCMUTE - Information Technology",
     github: "https://github.com/vanhau123w-collab",
@@ -84,6 +87,7 @@ const members = [
     name: "Truong Cong Anh",
     alias: "Cong Anh",
     role: "Prototype Developer",
+    avatar: "/team/conganh.webp",
     tagline: "Prototype first. Perfect later.",
     school: "HCMUTE",
     github: "https://github.com/coqanklazy",
@@ -220,7 +224,11 @@ function ExternalLink({ href, children }) {
 function ProfileAvatar({ member }) {
   return (
     <div className="profile-avatar" aria-hidden="true">
-      <span>{member.alias.slice(0, 2).toUpperCase()}</span>
+      {member.avatar ? (
+        <img src={member.avatar} alt={member.name} />
+      ) : (
+        <span>{member.alias.slice(0, 2).toUpperCase()}</span>
+      )}
     </div>
   );
 }
