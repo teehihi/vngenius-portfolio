@@ -245,7 +245,17 @@ function MemberCard({ member }) {
   return (
     <Card className="profile-card">
       <div className="profile-card-head">
-        <ProfileAvatar member={member} />
+        <ElectricBorder
+          color="#f97316"
+          speed={0.6}
+          chaos={0.04}
+          borderRadius={999}
+          displacement={6}
+          borderOffset={8}
+          className="profile-avatar-border"
+        >
+          <ProfileAvatar member={member} />
+        </ElectricBorder>
         <div className="min-w-0">
           <h3>{member.name}</h3>
           <p className="profile-role">

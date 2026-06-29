@@ -493,6 +493,8 @@ export function ElectricBorder({
   chaos = 0.08,
   borderRadius = 100,
   className = "",
+  displacement = 60,
+  borderOffset = 60,
 }) {
   const canvasRef = useRef(null);
   const containerRef = useRef(null);
@@ -507,8 +509,6 @@ export function ElectricBorder({
     const ctx = canvas.getContext("2d");
     if (!ctx) return undefined;
     let raf = 0;
-    const displacement = 60;
-    const borderOffset = 60;
     let width = 1;
     let height = 1;
 
@@ -651,7 +651,7 @@ export function ElectricBorder({
       cancelAnimationFrame(raf);
       resizeObserver.disconnect();
     };
-  }, [borderRadius, chaos, color, speed]);
+  }, [borderRadius, chaos, color, speed, displacement, borderOffset]);
 
   return (
     <div
