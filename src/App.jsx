@@ -126,6 +126,19 @@ const projects = [
     ],
   },
   {
+    title: "Đại Dương Săn Cá",
+    subtitle: "Core game project / browser arcade fish shooter",
+    variant: "daiduongsanca",
+    featured: true,
+    tags: ["HTML5 Canvas", "Vanilla JS", "Arcade Shooter", "Collision Physics"],
+    description:
+      "A browser arcade-style fish shooting game featuring multiple fish types, smooth bullet physics, dynamic scoring, audio effects, and responsive controls. Built with canvas and vanilla Javascript, fully optimized for browser play.",
+    links: [
+      { label: "GitHub", href: "https://github.com/teehihi/TeeBanCa" },
+      { label: "Live demo", href: "https://daiduongsanca.vercel.app/" },
+    ],
+  },
+  {
     title: "UniQuizz",
     subtitle: "Supporting project / battle quiz + Qbit wardrobe",
     variant: "uniquizz",
@@ -347,6 +360,8 @@ function ProjectCard({ project }) {
               ? "#38bdf8"
               : project.variant === "archaeologist"
               ? "#eab308"
+              : project.variant === "daiduongsanca"
+              ? "#06b6d4"
               : "#22c55e"
           }
           borderRadius={12}
@@ -384,6 +399,7 @@ function ProjectVisual({ variant }) {
   if (variant === "uniquizz") return <UniQuizzVisual />;
   if (variant === "xenow") return <XeNowVisual />;
   if (variant === "archaeologist") return <ArchaeologistVisual />;
+  if (variant === "daiduongsanca") return <DaiduongsancaVisual />;
   return <MazeVisual />;
 }
 
@@ -546,6 +562,40 @@ function ArchaeologistVisual() {
         {demos.slice(1).map(([label, src]) => (
           <div key={label} className="archaeologist-demo-tile">
             <img src={src} alt={`Future Archaeologist ${label} demo`} loading="lazy" />
+            <span>{label}</span>
+          </div>
+        ))}
+      </div>
+    </div>
+  );
+}
+
+function DaiduongsancaVisual() {
+  const demos = [
+    [
+      "Gameplay Showcase",
+      "https://media3.giphy.com/media/v1.Y2lkPTc5MGI3NjExazBpdXFmZ2ViZGt0eGM3d25vZHFnZDcxMGoyY2Y1YjY1b3F1ZmJvNSZlcD12MV9pbnRlcm5hbF9naWZfYnlfaWQmY3Q9Zw/jOiR3ehSKQJymkeSij/giphy.gif",
+    ],
+    [
+      "Loading Screen",
+      "https://media2.giphy.com/media/v1.Y2lkPTc5MGI3NjExZjkxdW9reDh5MThnZzU1eXR2d2ZuN2lsZmQ0OWtyd24xMXJqa3lhbSZlcD12MV9pbnRlcm5hbF9naWZfYnlfaWQmY3Q9Zw/IsEJWcJEOwyWTyDQ2k/giphy.gif",
+    ],
+    [
+      "Start Menu",
+      "https://media0.giphy.com/media/v1.Y2lkPTc5MGI3NjExZ2huMG1ncWZycXprbG91MjRvcXc5amVxcHkyanpnYTh2djBjaTZheiZlcD12MV9pbnRlcm5hbF9naWZfYnlfaWQmY3Q9Zw/KNWv19m2kr2XwP3OHc/giphy.gif",
+    ],
+  ];
+
+  return (
+    <div className="daiduongsanca-visual">
+      <div className="daiduongsanca-demo-main">
+        <img src={demos[0][1]} alt="Daiduongsanca gameplay demo" loading="lazy" />
+        <span>{demos[0][0]}</span>
+      </div>
+      <div className="daiduongsanca-demo-strip">
+        {demos.slice(1).map(([label, src]) => (
+          <div key={label} className="daiduongsanca-demo-tile">
+            <img src={src} alt={`Daiduongsanca ${label} demo`} loading="lazy" />
             <span>{label}</span>
           </div>
         ))}
