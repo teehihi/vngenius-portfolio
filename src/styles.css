@@ -77,19 +77,31 @@ a {
   position: fixed;
   inset: 0;
   z-index: 0;
+  overflow: hidden;
+}
+
+.mouse-glow-inner {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 72rem;
+  height: 72rem;
+  margin-left: -36rem;
+  margin-top: -36rem;
   background:
     radial-gradient(
-      36rem circle at var(--mouse-x) var(--mouse-y),
-      color-mix(in oklch, #ec4899 18%, transparent),
+      36rem circle at 36rem 36rem,
+      color-mix(in oklch, #0073ff 16%, transparent),
       transparent 42%
     ),
     radial-gradient(
-      28rem circle at calc(var(--mouse-x) + 10rem) calc(var(--mouse-y) + 6rem),
-      color-mix(in oklch, #f97316 14%, transparent),
+      28rem circle at 46rem 42rem,
+      color-mix(in oklch, #f97316 12%, transparent),
       transparent 45%
     );
   mix-blend-mode: plus-lighter;
   opacity: 0.75;
+  will-change: transform;
 }
 
 .click-pulse {

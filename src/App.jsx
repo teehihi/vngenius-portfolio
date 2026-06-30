@@ -22,7 +22,6 @@ import {
   ElectricBorder,
   FluidGradientText,
   InteractiveGrid,
-  MouseGlow,
   ScrollProgress,
   ShimmerText,
   ThemeToggle,
@@ -134,7 +133,7 @@ const projects = [
     description:
       "A browser arcade-style fish shooting game featuring multiple fish types, smooth bullet physics, dynamic scoring, audio effects, and responsive controls. Built with canvas and vanilla Javascript, fully optimized for browser play.",
     links: [
-      { label: "GitHub", href: "https://github.com/teehihi/TeeBanCa" },
+      { label: "GitHub", href: "https://github.com/teehihi/dai-duong-san-ca" },
       { label: "Live demo", href: "https://daiduongsanca.vercel.app/" },
     ],
   },
@@ -613,6 +612,7 @@ function App() {
       <ScrollProgress />
       <InteractiveGrid
         clickInteraction
+        clickForce={0.8}
         cursorTrail
         trailMode="hover"
         trailColor="#0073ff"
@@ -622,7 +622,6 @@ function App() {
         repulsionStrength={-0.66}
         motionSpeed={0.68}
       />
-      <MouseGlow />
       <ClickEffects />
       <nav className="section-nav" aria-label="Portfolio navigation">
         <a href="#about" className="nav-signature" aria-label="Back to top">

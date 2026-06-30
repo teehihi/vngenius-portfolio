@@ -5,17 +5,28 @@ export function ScrollProgress() {
 }
 
 export function MouseGlow() {
+  const glowRef = useRef(null);
+
   useEffect(() => {
     const onMove = (event) => {
-      document.documentElement.style.setProperty("--mouse-x", `${event.clientX}px`);
-      document.documentElement.style.setProperty("--mouse-y", `${event.clientY}px`);
+      if (glowRef.current) {
+        glowRef.current.style.transform = `translate3d(${event.clientX}px, ${event.clientY}px, 0)`;
+      }
     };
 
     window.addEventListener("pointermove", onMove, { passive: true });
     return () => window.removeEventListener("pointermove", onMove);
   }, []);
 
-  return <div className="mouse-glow" aria-hidden="true" />;
+  return (
+    <div className="mouse-glow" aria-hidden="true">
+      <div
+        ref={glowRef}
+        className="mouse-glow-inner"
+        style={{ transform: "translate3d(50vw, 50vh, 0)" }}
+      />
+    </div>
+  );
 }
 
 function parseColor(color) {
@@ -81,6 +92,7 @@ export function InteractiveGrid({
   const animationRef = useRef(0);
   const dotsRef = useRef(new Map());
   const mousePosRef = useRef(null);
+  const rectRef = useRef({ left: 0, top: 0, width: 1, height: 1 });
   const trailPointsRef = useRef([]);
   const isMouseDownRef = useRef(false);
   const configRef = useRef({});
@@ -162,6 +174,7 @@ export function InteractiveGrid({
 
     const resize = () => {
       const rect = canvas.getBoundingClientRect();
+      rectRef.current = rect;
       const dpr = Math.min(window.devicePixelRatio || 1, 1.5);
       width = Math.max(1, rect.width);
       height = Math.max(1, rect.height);
@@ -203,9 +216,13 @@ export function InteractiveGrid({
       const dx = baseX - mouse.x;
       const dy = baseY - mouse.y;
       const dist = Math.sqrt(dx * dx + dy * dy);
-      if (!dist) return { x: 0, y: 0 };
-      const pushAmount = Math.pow(1 - Math.min(dist / maxDist, 1), 2) * configRef.current.clickForce * 120;
-      return { x: (dx / dist) * pushAmount, y: (dy / dist) * pushAmount };
+      if (dist === 0) return { x: 0, y: 0 };
+      const normalizedDist = Math.min(dist / maxDist, 1);
+      const pushAmount = Math.pow(1 - normalizedDist, 2) * configRef.current.clickForce * 105;
+      return {
+        x: (dx / dist) * pushAmount,
+        y: (dy / dist) * pushAmount,
+      };
     };
 
     const draw = () => {
@@ -277,13 +294,21 @@ export function InteractiveGrid({
         ctx.save();
         ctx.lineCap = "round";
         ctx.lineJoin = "round";
-        ctx.lineWidth = 2;
+        ctx.lineWidth = 2.2;
         ctx.beginPath();
-        trailPointsRef.current.forEach((point, index) => {
-          if (now - point.time > maxAge) return;
-          if (index === 0) ctx.moveTo(point.x, point.y);
-          else ctx.lineTo(point.x, point.y);
-        });
+
+        const validPoints = trailPointsRef.current.filter((point) => now - point.time <= maxAge);
+
+        if (validPoints.length > 1) {
+          ctx.moveTo(validPoints[0].x, validPoints[0].y);
+          for (let i = 1; i < validPoints.length - 1; i++) {
+            const xc = (validPoints[i].x + validPoints[i + 1].x) / 2;
+            const yc = (validPoints[i].y + validPoints[i + 1].y) / 2;
+            ctx.quadraticCurveTo(validPoints[i].x, validPoints[i].y, xc, yc);
+          }
+          ctx.lineTo(validPoints[validPoints.length - 1].x, validPoints[validPoints.length - 1].y);
+        }
+
         const last = trailPointsRef.current.at(-1);
         const alpha = last ? Math.max(0, 1 - (now - last.time) / maxAge) : 0;
         ctx.strokeStyle = `rgba(${trail.r}, ${trail.g}, ${trail.b}, ${alpha * 0.9 * trail.a})`;
@@ -295,7 +320,7 @@ export function InteractiveGrid({
     };
 
     const updateMousePosition = (clientX, clientY) => {
-      const rect = canvas.getBoundingClientRect();
+      const rect = rectRef.current;
       const x = clientX - rect.left;
       const y = clientY - rect.top;
       if (x >= 0 && y >= 0 && x <= rect.width && y <= rect.height) {
@@ -306,11 +331,11 @@ export function InteractiveGrid({
       return null;
     };
 
-    const pushTrailPoint = (point) => {
+    const pushTrailPoint = (x, y) => {
       const config = configRef.current;
       if (!config.cursorTrail || (config.trailMode === "click" && !isMouseDownRef.current)) return;
       const effectiveLength = Math.max(1, Math.round(config.trailLength * 100));
-      trailPointsRef.current.push({ ...point, time: performance.now() });
+      trailPointsRef.current.push({ x, y, time: performance.now() });
       if (trailPointsRef.current.length > effectiveLength) {
         trailPointsRef.current.splice(0, trailPointsRef.current.length - effectiveLength);
       }
@@ -318,13 +343,17 @@ export function InteractiveGrid({
 
     const handlePointerMove = (event) => {
       const point = updateMousePosition(event.clientX, event.clientY);
-      if (point) pushTrailPoint(point);
+      if (point) {
+        pushTrailPoint(point.x, point.y);
+      }
     };
 
     const handlePointerDown = (event) => {
       isMouseDownRef.current = true;
       const point = updateMousePosition(event.clientX, event.clientY);
-      if (point) pushTrailPoint(point);
+      if (point) {
+        pushTrailPoint(point.x, point.y);
+      }
     };
 
     const handlePointerUp = () => {
